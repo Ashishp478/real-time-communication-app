@@ -27,8 +27,9 @@ app.use(
       "http://localhost:5173",
       "https://real-time-communication-app-theta.vercel.app",
     ],
-    methods: ["GET","POST","PUT","DELETE","OPTIONS"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
