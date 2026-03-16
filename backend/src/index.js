@@ -32,8 +32,6 @@ app.use(
   })
 );
 
-app.options("/*", cors());
-
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
