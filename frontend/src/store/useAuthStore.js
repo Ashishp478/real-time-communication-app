@@ -7,7 +7,7 @@ import { useCallStore } from "./useCallStore";
 const BASE_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:3001"
-    : "https://realtime-chat-backend.onrender.com";
+    : "https://real-time-communication-app-iwd.onrender.com";
 
 export const useAuthStore = create((set, get) => ({
   // ---------------- STATE ---------------- //
