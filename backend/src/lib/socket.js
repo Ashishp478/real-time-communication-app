@@ -15,7 +15,7 @@ const activeCalls = new Map();
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",  // ✅ yaha change karo
+    origin: "https://real-time-communication-app-theta.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
