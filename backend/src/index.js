@@ -23,16 +23,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://real-time-communication-app-theta.vercel.app",
-    ],
+    origin: true,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
