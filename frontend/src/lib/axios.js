@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/api",  // 🔥 add /api
+  baseURL: "https://real-time-communication-backend.onrender.com/api",
   withCredentials: true,               // 🔥 VERY IMPORTANT
 });
