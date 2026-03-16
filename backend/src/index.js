@@ -32,7 +32,7 @@ app.use(
   })
 );
 
-app.options("*", cors());
+app.options("/*", cors());
 
 // routes
 app.use("/api/auth", authRoutes);
