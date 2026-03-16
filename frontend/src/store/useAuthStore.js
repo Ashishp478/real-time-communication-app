@@ -1,3 +1,4 @@
+
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
@@ -82,12 +83,16 @@ export const useAuthStore = create((set, get) => ({
     const socket = io(BASE_URL, {
       query: { userId: authUser._id },
       withCredentials: true,
+      transports: ["websocket"],
+      reconnection: true,
     });
 
-    socket.connect();
-    set({ socket });
+    socket.on("connect", () => {
+      console.log("✅ SOCKET CONNECTED:", socket.id);
+    });
 
-    console.log("✅ SOCKET CONNECTED:", socket.id);
+    // store socket in state
+    set({ socket });
 
     // ---------------- ONLINE USERS ---------------- //
     socket.on("getOnlineUsers", (users) => {
@@ -97,24 +102,20 @@ export const useAuthStore = create((set, get) => ({
     // ---------------- CALL EVENTS ---------------- //
     const callStore = useCallStore.getState();
 
-    // 📞 Incoming voice/video call
     socket.on("incomingCall", ({ from, offer, type }) => {
       console.log("📞 Incoming call:", type, "from", from);
       callStore.receiveCall(from, offer, type);
     });
 
-    // ✅ Answer received
     socket.on("callAnswered", ({ answer }) => {
       console.log("✅ Call answered");
       callStore.handleAnswer(answer);
     });
 
-    // ❄ ICE candidate
     socket.on("iceCandidate", ({ candidate }) => {
       callStore.addIceCandidate(candidate);
     });
 
-    // ❌ Call ended
     socket.on("callEnded", () => {
       console.log("❌ Call ended by remote user");
       callStore.endCall();
@@ -127,7 +128,9 @@ export const useAuthStore = create((set, get) => ({
 
   // ---------------- DISCONNECT ---------------- //
   disconnectSocket: () => {
-    if (get().socket?.connected) get().socket.disconnect();
+    if (get().socket?.connected) {
+      get().socket.disconnect();
+    }
     set({ socket: null });
   },
 }));
